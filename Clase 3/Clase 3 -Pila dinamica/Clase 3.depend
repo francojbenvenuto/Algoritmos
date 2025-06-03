@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1744674352 source:c:\users\seba\desktop\facu\prog\topicosdeprogramacion\clase 3\main.c
+	"Funciones.h"
+
+1744674670 c:\users\seba\desktop\facu\prog\topicosdeprogramacion\clase 3\funciones.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1744674827 source:c:\users\seba\desktop\facu\prog\topicosdeprogramacion\clase 3\funciones.c
+	"Funciones.h"
+
+1745005354 source:c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 3\clase 3 -pila dinamica\funciones.c
+	"Funciones.h"
+
+1745005956 c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 3\clase 3 -pila dinamica\funciones.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1745005993 source:c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 3\clase 3 -pila dinamica\main.c
+	"Funciones.h"
+

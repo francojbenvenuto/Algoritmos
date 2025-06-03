@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1747081234 source:c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\colacircular\colacircular.c
+	"ColaCircular.h"
+
+1747080670 c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\colacircular\colacircular.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

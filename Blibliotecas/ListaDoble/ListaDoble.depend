@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1747084874 source:c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\listadoble\listadoble.c
+	"listaDoble.h"
+
+1747084104 c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\listadoble\listadoble.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

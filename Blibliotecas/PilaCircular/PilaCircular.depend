@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1746478029 source:c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\pilacircular\pilacircular.c
+	"PilaCircular.h"
+	<stdio.h>
+
+1746475905 c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\pilacircular\pilacircular.h
+	<stdlib.h>
+	<string.h>
+

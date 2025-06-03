@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1745898256 source:c:\users\cacer\documents\programitas\blibliotecas\coladinamica\coladinamica.c
+	"ColaDinamica.h"
+
+1745897966 c:\users\cacer\documents\programitas\blibliotecas\coladinamica\coladinamica.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

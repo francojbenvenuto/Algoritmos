@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1745889199 source:c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\tda_vector\tda_vector.c
+	"TDA_Vector.h"
+
+1745889199 c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\tda_vector\tda_vector.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+

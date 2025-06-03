@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1745877696 source:c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\colaestatica\colaestatica.c
+	"ColaEstatica.h"
+
+1745896209 c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\colaestatica\colaestatica.h
+	<string.h>
+	<stdlib.h>
+
+1745898115 source:c:\users\cacer\documents\programitas\blibliotecas\colaestatica\colaestatica.c
+	"ColaEstatica.h"
+
+1745897966 c:\users\cacer\documents\programitas\blibliotecas\colaestatica\colaestatica.h
+	<string.h>
+	<stdlib.h>
+

@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1745897650 source:c:\users\cacer\documents\programitas\blibliotecas\piladinamica\piladinamica.c
+	"PilaDinamica.h"
+
+1745897500 c:\users\cacer\documents\programitas\blibliotecas\piladinamica\piladinamica.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

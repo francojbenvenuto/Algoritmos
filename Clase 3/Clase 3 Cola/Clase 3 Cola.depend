@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1744676467 source:c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 3\clase 3 cola\main.c
+	"Funciones.h"
+
+1744677711 c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 3\clase 3 cola\funciones.h
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+
+1744677790 source:c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 3\clase 3 cola\funciones.c
+	"Funciones.h"
+

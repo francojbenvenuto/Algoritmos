@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1745897097 source:c:\users\cacer\documents\programitas\blibliotecas\pilaestatica\pilaestatica.c
+	"PilaEstatica.h"
+
+1745897529 c:\users\cacer\documents\programitas\blibliotecas\pilaestatica\pilaestatica.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

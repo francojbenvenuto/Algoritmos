@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1744075385 source:c:\users\laboratorios\desktop\clase 2\funciones.c
+	"funciones.h"
+
+1744074483 c:\users\laboratorios\desktop\clase 2\funciones.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1744073382 source:c:\users\laboratorios\desktop\clase 2\main.c
+	"funciones.h"
+
+1744399747 source:c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 2 - pila\clase 2\funciones.c
+	"funciones.h"
+
+1744399758 c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 2 - pila\clase 2\funciones.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1744399875 source:c:\users\seba\desktop\facu\2025\primer cuatri\algoritmos\clase 2 - pila\clase 2\main.c
+	"funciones.h"
+

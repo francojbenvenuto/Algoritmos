@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1745269194 source:c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\clase 4\colaestatica.c
+	"ColaEstatica.h"
+
+1745269194 c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\clase 4\colaestatica.h
+	<string.h>
+	<stdlib.h>
+
+1745269552 source:c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\clase 4\main.c
+	"funciones.h"
+
+1745268799 c:\users\cacer\documents\programitas\algoritmos y estructuras de datos\clase 4\funciones.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1739741054 source:e:\algoritmos y estructuras de datos\clases\clase 4 cola estatica\main.c
+	"ColaEstatica.h"
+
+1745269196 e:\algoritmos y estructuras de datos\clases\clase 4 cola estatica\colaestatica.h
+	<string.h>
+	<stdlib.h>
+
