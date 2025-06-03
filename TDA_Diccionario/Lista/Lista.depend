@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1745896592 source:c:\users\cacer\documents\programitas\blibliotecas\lista\lista.c
+	"Lista.h"
+
+1745896592 c:\users\cacer\documents\programitas\blibliotecas\lista\lista.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

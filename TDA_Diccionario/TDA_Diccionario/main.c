@@ -1,8 +1,7 @@
-#include "Diccionario.h" // Bien
 #include <stdio.h>    // Para printf
 #include <string.h>   // Para strlen
 
-// #define ERROR -1 // No es necesario aquí si usas los retornos de las funciones del dic
+#include "Diccionario.h" // Bien
 
 int main()
 {
@@ -98,7 +97,7 @@ int main()
 
 
     // --- Liberar memoria al final ---
-    vaciar_dic(&dic); // Implementar esta función para liberar toda la memoria interna
+    //vaciar_dic(&dic); // Implementar esta función para liberar toda la memoria interna
     printf("\nDiccionario vaciado.\n");
 
 
