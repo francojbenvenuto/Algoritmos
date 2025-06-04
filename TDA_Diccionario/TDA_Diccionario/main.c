@@ -69,37 +69,37 @@ int main()
 
 
     // --- PRUEBA DE SACAR_DIC (cuando la implementes) ---
-    // printf("\n--- Probando sacar_dic ---\n");
-    // const char* clave_a_sacar = "pez";
-    // int res_sacar = sacar_dic(&dic, clave_a_sacar, strlen(clave_a_sacar) + 1, hash_simple);
-    // if (res_sacar == DIC_OK) {
-    //     printf("Clave '%s' eliminada.\n", clave_a_sacar);
-    //     // Intentar obtenerla de nuevo (debería fallar)
-    //     res_obtener = obtener_dic(&dic, clave_a_sacar, strlen(clave_a_sacar) + 1, buffer_valor, sizeof(buffer_valor), hash_simple);
-    //     if (res_obtener == DIC_CLAVE_NO_ENCONTRADA) printf("Verificado: Clave '%s' ya no existe.\n", clave_a_sacar);
-    // } else {
-    //     printf("Error al sacar la clave '%s'.\n", clave_a_sacar);
-    // }
+     printf("\n--- Probando sacar_dic ---\n");
+     const char* clave_a_sacar = "pez";
+     int res_sacar = sacar_dic(&dic, clave_a_sacar, strlen(clave_a_sacar) + 1, hash_simple);
+     if (res_sacar == DIC_OK) {
+         printf("Clave '%s' eliminada.\n", clave_a_sacar);
+         // Intentar obtenerla de nuevo (debería fallar)
+         res_obtener = obtener_dic(&dic, clave_a_sacar, strlen(clave_a_sacar) + 1, buffer_valor, sizeof(buffer_valor), hash_simple);
+         if (res_obtener == DIC_CLAVE_NO_ENCONTRADA) printf("Verificado: Clave '%s' ya no existe.\n", clave_a_sacar);
+     } else {
+         printf("Error al sacar la clave '%s'.\n", clave_a_sacar);
+     }
 
 
-    // --- PRUEBA DE RECORRER_DIC (cuando la implementes) ---
-    // void mi_accion_imprimir(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto) {
-    //     // Asumimos que clave y valor son strings para este ejemplo de acción
-    //     printf("Recorrer: Clave: %s (%zu bytes) -> Valor: %s (%zu bytes)\n",
-    //            (const char*)clave, tamClave, (const char*)valor, tamValor);
-    //     if (contexto) {
-    //         // int* contador = (int*)contexto;
-    //         // (*contador)++;
-    //     }
-    // }
-    // printf("\n--- Probando recorrer_dic ---\n");
-    // recorrer_dic(&dic, mi_accion_imprimir, NULL);
+//     --- PRUEBA DE RECORRER_DIC (cuando la implementes) ---
+     void mi_accion_imprimir(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto) {
+         // Asumimos que clave y valor son strings para este ejemplo de acción
+         printf("Recorrer: Clave: %s (%lu bytes) -> Valor: %s (%lu bytes)\n",
+                (const char*)clave, (unsigned long)tamClave, (const char*)valor, (unsigned long)tamValor);
+         if (contexto) {
+              int* contador = (int*)contexto;
+              (*contador)++;
+         }
+     }
+     printf("\n--- Probando recorrer_dic ---\n");
+     recorrer_dic(&dic, mi_accion_imprimir, NULL);
 
 
     // --- Liberar memoria al final ---
-    //vaciar_dic(&dic); // Implementar esta función para liberar toda la memoria interna
+    vaciar_dic(&dic);
     printf("\nDiccionario vaciado.\n");
 
 
-    return 0; // O EXIT_SUCCESS
+    return 0;
 }

@@ -1,32 +1,25 @@
 #include "Diccionario.h"
-#include "../Lista/Lista.c"
-
 
 int crear_dic(tDiccionario* dic, size_t capacidad)
 {
-    // Es buena práctica verificar si dic es NULL antes de usarlo
-    if (!dic) return DIC_ERROR; // O tu código de error preferido
+    if (!dic)
+        return DIC_ERROR;
 
-    // calloc es mejor aquí porque inicializa la memoria a cero (todos los punteros a NULL)
     dic->tabla = (tLista*) calloc(capacidad, sizeof(tLista));
     if(!dic->tabla)
-        return DIC_ERROR_MEMORIA; // Error específico de memoria
-
-    // No es necesario el bucle si usas calloc:
-    // for (size_t i = 0; i < capacidad; i++)
-    // {
-    //     dic->tabla[i] = NULL;
-    // }
+        return DIC_ERROR_MEMORIA;
 
     dic->capacidad = capacidad;
     dic->cantidad = 0;
-    return DIC_OK; // Éxito
+    return DIC_OK;
 }
 
 int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void* valor, size_t tamValor, funcion_hash_t hash) // Usando el typedef
 {
-    if (!dic || !clave || !valor || !hash) return DIC_ERROR; // Validaciones básicas
-    if (dic->capacidad == 0) return DIC_ERROR; // Evitar división por cero si capacidad es 0
+    if (!dic || !clave || !valor || !hash)
+        return DIC_ERROR;
+    if (dic->capacidad == 0)
+        return DIC_ERROR; // Evitar división por cero si capacidad es 0
 
     size_t indice = hash(clave, tamClave) % dic->capacidad;
     tLista *pListaEnBucket = &dic->tabla[indice]; // Puntero a la cabeza de la lista en el bucket
@@ -39,23 +32,18 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
         if(elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0)
         {
             // Clave encontrada, actualizar valor
-            // Primero, liberar el valor antiguo si es de diferente tamaño o si prefieres siempre reemplazar
-            if (elem->tamValor != tamValor)   // Opcional: solo reemplazar si el tamaño cambia
+            if (elem->tamValor != tamValor)
             {
                 free(elem->valor);
                 elem->valor = malloc(tamValor);
                 if (!elem->valor)
-                {
-                    // Aquí la situación es complicada: no pudimos actualizar.
-                    // Podrías dejar el valor viejo o retornar un error crítico.
-                    // Por simplicidad, muchos TDA podrían retornar error aquí.
                     return DIC_ERROR_MEMORIA;
-                }
             }
             else if (!elem->valor && tamValor > 0)     // Si antes no había valor o era NULL
             {
                 elem->valor = malloc(tamValor);
-                if(!elem->valor) return DIC_ERROR_MEMORIA;
+                if(!elem->valor)
+                    return DIC_ERROR_MEMORIA;
             }
             else if (elem->valor && tamValor == 0)     // Si el nuevo valor es "nada"
             {
@@ -69,13 +57,13 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
                 memcpy(elem->valor, valor, tamValor);
             }
             elem->tamValor = tamValor;
-            return DIC_OK; // Éxito (valor actualizado)
+            return DIC_OK;
         }
         Actual = Actual->sig;
     }
 
     // Si la clave no existe, crear el nuevo elemento y agregarlo
-    tElementoDic nuevoElemento; // Se crea en el stack temporalmente
+    tElementoDic nuevoElemento;
 
     nuevoElemento.clave = malloc(tamClave);
     if (!nuevoElemento.clave)
@@ -98,22 +86,24 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
     {
         free(nuevoElemento.clave);
         free(nuevoElemento.valor);
-        return DIC_ERROR_MEMORIA; // O error genérico de lista
+        return DIC_ERROR_MEMORIA;
     }
 
     dic->cantidad++;
-    return DIC_OK; // Éxito (nuevo elemento insertado)
+    return DIC_OK;
 }
 
-// Asegúrate que el prototipo esté en Diccionario.h
+
 int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, void* valorDestino, size_t tamValorDestino, funcion_hash_t hash)
 {
-    if (!dic || !clave || !valorDestino || !hash) return DIC_ERROR;
-    if (dic->capacidad == 0) return DIC_ERROR;
+    if (!dic || !clave || !valorDestino || !hash)
+        return DIC_ERROR;
+    if (dic->capacidad == 0)
+        return DIC_ERROR;
 
 
     size_t indice = hash(clave, tamClave) % dic->capacidad;
-    tLista listaBucket = dic->tabla[indice]; // No es puntero a lista, es la lista (el puntero al primer nodo)
+    tLista listaBucket = dic->tabla[indice];
     tNodo* actual = listaBucket;
 
     while (actual)
@@ -123,23 +113,21 @@ int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, voi
         if (elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0)
         {
             // Clave encontrada. Copiar el valor al buffer del usuario.
-            // Asegurarse de no copiar más de lo que cabe en el buffer destino.
             size_t bytesACopiar = (tamValorDestino < elem->tamValor) ? tamValorDestino : elem->tamValor;
             memcpy(valorDestino, elem->valor, bytesACopiar);
-            // Sería útil informar al usuario cuántos bytes se copiaron,
-            // o si el buffer era muy pequeño. Podrías retornar 'bytesACopiar'.
-            // O si la función solo retorna éxito/fracaso, entonces 1 (DIC_OK).
             return DIC_OK;
         }
         actual = actual->sig;
     }
-    return DIC_CLAVE_NO_ENCONTRADA; // No se encontró la clave
+    return DIC_CLAVE_NO_ENCONTRADA;
 }
 
 int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_hash_t hash)
 {
-    if (!dic || !clave || !hash) return DIC_ERROR;
-    if (dic->capacidad == 0) return DIC_ERROR;
+    if (!dic || !clave || !hash)
+        return DIC_ERROR;
+    if (dic->capacidad == 0)
+        return DIC_ERROR;
 
     size_t indice = hash(clave, tamClave) % dic->capacidad;
     tLista *pLista = &(dic->tabla[indice]);
@@ -152,7 +140,7 @@ int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_has
         if(elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0)
         {
             // Encontrado. Eliminarlo de la lista.
-            if(anterior == NULL)   // Es el primer nodo de la lista
+            if(anterior == NULL)
             {
                 *pLista = actual->sig;
             }
@@ -163,65 +151,77 @@ int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_has
             // Liberar memoria del elemento (clave, valor) y del nodo mismo
             free(elem->clave);
             free(elem->valor);
-            free(elem); // elem es actual->info
-            free(actual); // el nodo de la lista
+            free(elem);
+            free(actual);
             dic->cantidad--;
             return DIC_OK;
         }
         anterior = actual;
         actual = actual->sig;
     }
-    return DIC_CLAVE_NO_ENCONTRADA; // No encontrado
+    return DIC_CLAVE_NO_ENCONTRADA;
 }
 
 
 
- void recorrer_dic(tDiccionario* dic, accion_dic_t accion, void* contexto) {
-     if (!dic || !accion) return;
+ void recorrer_dic(tDiccionario* dic, accion_dic_t accion, void* contexto)
+ {
+     if (!dic || !accion)
+        return;
 
-     for (size_t i = 0; i < dic->capacidad; i++) {
+     for (size_t i = 0; i < dic->capacidad; i++)
+     {
          tNodo* actual = dic->tabla[i];
-         while (actual != NULL) {
+         while (actual != NULL)
+         {
              tElementoDic* elem = (tElementoDic*)actual->info;
              accion(elem->clave, elem->tamClave, elem->valor, elem->tamValor, contexto);
              actual = actual->sig;
-        }
+         }
      }
  }
 
 
-void vaciar_dic(tDiccionario* dic) {
-    if (!dic) return;
+void vaciar_dic(tDiccionario* dic)
+{
+    if (!dic)
+        return;
 
-    for (size_t i = 0; i < dic->capacidad; i++) {
+    for (size_t i = 0; i < dic->capacidad; i++)
+    {
         tNodo* actual = dic->tabla[i];
-        while (actual != NULL) {
+        while (actual != NULL)
+        {
             tNodo* siguiente = actual->sig; // Guardar el siguiente antes de liberar 'actual'
             tElementoDic* elem = (tElementoDic*)actual->info;
             free(elem->clave);
             free(elem->valor);
-            free(elem); // Libera la estructura tElementoDic
-            free(actual); // Libera el nodo tNodo
+            free(elem);
+            free(actual);
             actual = siguiente;
         }
-        dic->tabla[i] = NULL; // Marcar la lista como vacía
+        dic->tabla[i] = NULL;
     }
-    // No liberamos dic->tabla ni dic mismo aquí, porque crear_dic los recibió
-    // y no los creó dinámicamente (solo el contenido de dic->tabla).
-    // Si crear_dic hiciera malloc para tDiccionario, aquí se haría free(dic).
-    // Si esta función debe liberar TODO y poner el puntero a NULL,
-    // necesitaría tDiccionario** pDic.
-    // Pero como está planteado tu crear_dic, solo se vacían los contenidos.
-    // Para cumplir con "libera toda la memoria" [cite: 13] en el contexto de tu crear_dic,
-    // SIEMPRE debes liberar el array 'dic->tabla'.
     free(dic->tabla);
-    dic->tabla = NULL; // Buena práctica
+    dic->tabla = NULL;
     dic->cantidad = 0;
-    dic->capacidad = 0; // Opcional, pero indica que ya no es usable.
+    dic->capacidad = 0;
  }
 
-//////Funciones de Hash////
 
+void imprimir_clave_valor_str(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto)
+{
+    const char* str_clave = (const char*)clave;
+    const char* str_valor = (const char*)valor;
+
+    printf("Clave: [%s] -> Valor: [%s]\n", str_clave, str_valor);
+}
+
+
+
+
+
+//////Funciones de Hash////
 
 size_t hash_simple(const void* clave, size_t tamClave)
 {
@@ -233,29 +233,15 @@ size_t hash_simple(const void* clave, size_t tamClave)
 }
 
 // Función de hash para strings (djb2)
-size_t hash_string(const void *clave)
+size_t hash_string(const void *clave, size_t tamClave)
 {
-    const char *str = clave;
-    size_t hash = 5381;
-    int c;
-    while ((c = *str++)) {
-        hash = ((hash << 5) + hash) + c; // hash * 33 + c
+    const char *str = (const char *)clave;
+    size_t hash = 5381; // Valor inicial común para djb2
+    size_t i;
+
+    for (i = 0; i < tamClave; i++) {
+        hash = ((hash << 5) + hash) + str[i]; // hash * 33 + str[i]
     }
+
     return hash;
-}
-
-void imprimir_clave_valor_str(const void* clave, size_t tamClave,
-                               void* valor, size_t tamValor,
-                               void* contexto) {
-
-    // Para evitar warnings de "parámetro no utilizado" si no los necesitas:
-    (void)tamClave;
-    (void)tamValor;
-    (void)contexto;
-
-    // Hacemos un "cast" de los punteros void* a const char* para poder imprimirlos como strings
-    const char* str_clave = (const char*)clave;
-    const char* str_valor = (const char*)valor;
-
-    printf("Clave: [%s] -> Valor: [%s]\n", str_clave, str_valor);
 }
