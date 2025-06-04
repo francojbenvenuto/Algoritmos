@@ -8,6 +8,7 @@
 // --- AGREGAR stddef.h para size_t y stdbool.h para bool ---
 #include <stddef.h> // Para size_t
 #include <stdbool.h> // Para bool, true, false (si usas booleanos para retornos)
+#include "../Lista/Lista.h"
 
 // --- Códigos de retorno sugeridos (opcional, pero ayuda a la legibilidad) ---
 #define DIC_OK 1
@@ -15,15 +16,6 @@
 #define DIC_ERROR_MEMORIA -1 // Ejemplo más específico
 #define DIC_CLAVE_DUPLICADA 2 // Ejemplo para poner_dic si no actualiza
 #define DIC_CLAVE_NO_ENCONTRADA -2 // Ejemplo
-
-typedef struct sNodo
-{
-    void *info;
-    size_t tamInfo; // El tamaño del tElementoDic
-    struct sNodo *sig;
-} tNodo;
-
-typedef tNodo *tLista; // tLista es un puntero a tNodo, representa la cabeza de la lista
 
 typedef struct
 {
@@ -33,7 +25,8 @@ typedef struct
 } tDiccionario;
 
 // Esta estructura es la que realmente se almacena en cada nodo de las listas
-typedef struct tElementoDic {
+typedef struct tElementoDic
+{
     void* clave;
     size_t tamClave;
     void* valor;

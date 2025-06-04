@@ -1,16 +1,5 @@
 #include "Diccionario.h"
 
-//////Funcion de Hash////
-size_t hash_simple(const void* clave, size_t tamClave)
-{
-    const unsigned char* bytes = (const unsigned char*)clave;
-    size_t hash = 0;
-    for (size_t i = 0; i < tamClave; i++)
-        hash += bytes[i];
-    return hash;
-}
-
-
 int crear_dic(tDiccionario* dic, size_t capacidad)
 {
     // Es buena práctica verificar si dic es NULL antes de usarlo
@@ -32,11 +21,7 @@ int crear_dic(tDiccionario* dic, size_t capacidad)
     return DIC_OK; // Éxito
 }
 
-
-
-int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave,
-              const void* valor, size_t tamValor,
-              funcion_hash_t hash) // Usando el typedef
+int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void* valor, size_t tamValor, funcion_hash_t hash) // Usando el typedef
 {
     if (!dic || !clave || !valor || !hash) return DIC_ERROR; // Validaciones básicas
     if (dic->capacidad == 0) return DIC_ERROR; // Evitar división por cero si capacidad es 0
@@ -119,9 +104,7 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave,
 }
 
 // Asegúrate que el prototipo esté en Diccionario.h
-int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave,
-                void* valorDestino, size_t tamValorDestino,
-                funcion_hash_t hash)
+int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, void* valorDestino, size_t tamValorDestino, funcion_hash_t hash)
 {
     if (!dic || !clave || !valorDestino || !hash) return DIC_ERROR;
     if (dic->capacidad == 0) return DIC_ERROR;
@@ -151,63 +134,69 @@ int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave,
     return DIC_CLAVE_NO_ENCONTRADA; // No se encontró la clave
 }
 
-int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_hash_t hash) {
-     if (!dic || !clave || !hash) return DIC_ERROR;
-     if (dic->capacidad == 0) return DIC_ERROR;
-
-     size_t indice = hash(clave, tamClave) % dic->capacidad;
-     tLista *pLista = &(dic->tabla[indice]);
-     tNodo *actual = *pLista;
-     tNodo *anterior = NULL;
-
-     while(actual != NULL) {
-         tElementoDic *elem = (tElementoDic *)actual->info;
-         if(elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0) {
-             // Encontrado. Eliminarlo de la lista.
-             if(anterior == NULL) { // Es el primer nodo de la lista
-                 *pLista = actual->sig;
-             } else {
-                 anterior->sig = actual->sig;
-             }
-             // Liberar memoria del elemento (clave, valor) y del nodo mismo
-             free(elem->clave);
-             free(elem->valor);
-             free(elem); // elem es actual->info
-             free(actual); // el nodo de la lista
-             dic->cantidad--;
-             return DIC_OK;
-         }
-         anterior = actual;
-         actual = actual->sig;
-     }
-     return DIC_CLAVE_NO_ENCONTRADA; // No encontrado
- }
-
-
-
-////////FUNCIONES DE LISTA////////////
-int poner_primero_lista(tLista *pl, const void *pd, size_t tam)
+int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_hash_t hash)
 {
-    tNodo *nue = (tNodo*)malloc(sizeof(tNodo));
-    if(!nue)
-        return 0; ///LISTA_LLENA
-    nue->info = malloc(tam);
-    if(!nue->info)
+    if (!dic || !clave || !hash) return DIC_ERROR;
+    if (dic->capacidad == 0) return DIC_ERROR;
+
+    size_t indice = hash(clave, tamClave) % dic->capacidad;
+    tLista *pLista = &(dic->tabla[indice]);
+    tNodo *actual = *pLista;
+    tNodo *anterior = NULL;
+
+    while(actual != NULL)
     {
-        free(nue);
-        return 0; ///LISTA_LLENA
+        tElementoDic *elem = (tElementoDic *)actual->info;
+        if(elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0)
+        {
+            // Encontrado. Eliminarlo de la lista.
+            if(anterior == NULL)   // Es el primer nodo de la lista
+            {
+                *pLista = actual->sig;
+            }
+            else
+            {
+                anterior->sig = actual->sig;
+            }
+            // Liberar memoria del elemento (clave, valor) y del nodo mismo
+            free(elem->clave);
+            free(elem->valor);
+            free(elem); // elem es actual->info
+            free(actual); // el nodo de la lista
+            dic->cantidad--;
+            return DIC_OK;
+        }
+        anterior = actual;
+        actual = actual->sig;
     }
-
-    nue->tamInfo = tam;
-    memcpy(nue->info,pd,tam);
-    nue->sig = *pl;
-
-    *pl = nue;
-
-    return 1; ///OK
+    return DIC_CLAVE_NO_ENCONTRADA; // No encontrado
 }
 
 
 
 
 
+
+//////Funciones de Hash////
+
+
+size_t hash_simple(const void* clave, size_t tamClave)
+{
+    const unsigned char* bytes = (const unsigned char*)clave;
+    size_t hash = 0;
+    for (size_t i = 0; i < tamClave; i++)
+        hash += bytes[i];
+    return hash;
+}
+
+// Función de hash para strings (djb2)
+size_t hash_string(const void *clave)
+{
+    const char *str = clave;
+    size_t hash = 5381;
+    int c;
+    while ((c = *str++)) {
+        hash = ((hash << 5) + hash) + c; // hash * 33 + c
+    }
+    return hash;
+}
