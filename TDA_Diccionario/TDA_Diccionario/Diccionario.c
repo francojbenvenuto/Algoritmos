@@ -174,7 +174,18 @@ int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_has
 
 
 
+ void recorrer_dic(tDiccionario* dic, accion_dic_t accion, void* contexto) {
+     if (!dic || !accion) return;
 
+     for (size_t i = 0; i < dic->capacidad; i++) {
+         tNodo* actual = dic->tabla[i];
+         while (actual != NULL) {
+             tElementoDic* elem = (tElementoDic*)actual->info;
+             accion(elem->clave, elem->tamClave, elem->valor, elem->tamValor, contexto);
+             actual = actual->sig;
+        }
+     }
+ }
 
 
 //////Funciones de Hash////
