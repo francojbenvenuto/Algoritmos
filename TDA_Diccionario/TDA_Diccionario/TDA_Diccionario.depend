@@ -10,3 +10,28 @@
 1748803451 source:c:\users\seba\desktop\facu\prog\topicosdeprogramacion\tda_diccionario\diccionario.c
 	"Diccionario.h"
 
+1749000974 source:c:\users\dario\onedrive\desktop\programacion\algoritmos\tda_diccionario\tda_diccionario\main.c
+	<stdio.h>
+	<string.h>
+	"Diccionario.h"
+
+1749000487 c:\users\dario\onedrive\desktop\programacion\algoritmos\tda_diccionario\tda_diccionario\diccionario.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stddef.h>
+	<stdbool.h>
+	"../Lista/Lista.h"
+
+1749000487 c:\users\dario\onedrive\desktop\programacion\algoritmos\tda_diccionario\lista\lista.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1749001587 source:c:\users\dario\onedrive\desktop\programacion\algoritmos\tda_diccionario\tda_diccionario\diccionario.c
+	"Diccionario.h"
+	"../Lista/Lista.c"
+
+1749000487 c:\users\dario\onedrive\desktop\programacion\algoritmos\tda_diccionario\lista\lista.c
+	"Lista.h"
+

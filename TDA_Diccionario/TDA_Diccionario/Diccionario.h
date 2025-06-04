@@ -63,4 +63,10 @@ void vaciar_dic(tDiccionario* dic); // Si solo libera internos. Si libera 'dic' 
 size_t hash_simple(const void* clave, size_t tamClave); // Prototipo
 int poner_primero_lista(tLista *pl, const void *pd, size_t tam); // Prototipo
 
+
+// En Diccionario.h (o donde tengas tus typedefs)
+typedef void (*accion_dic_t)(const void* clave, size_t tamClave,
+                             void* valor, size_t tamValor,
+                             void* contexto);
+
 #endif // DICCIONARIO_H_INCLUDED

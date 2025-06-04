@@ -1,4 +1,6 @@
 #include "Diccionario.h"
+#include "../Lista/Lista.c"
+
 
 int crear_dic(tDiccionario* dic, size_t capacidad)
 {
@@ -210,4 +212,20 @@ size_t hash_string(const void *clave)
         hash = ((hash << 5) + hash) + c; // hash * 33 + c
     }
     return hash;
+}
+
+void imprimir_clave_valor_str(const void* clave, size_t tamClave,
+                               void* valor, size_t tamValor,
+                               void* contexto) {
+
+    // Para evitar warnings de "parámetro no utilizado" si no los necesitas:
+    (void)tamClave;
+    (void)tamValor;
+    (void)contexto;
+
+    // Hacemos un "cast" de los punteros void* a const char* para poder imprimirlos como strings
+    const char* str_clave = (const char*)clave;
+    const char* str_valor = (const char*)valor;
+
+    printf("Clave: [%s] -> Valor: [%s]\n", str_clave, str_valor);
 }
