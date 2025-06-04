@@ -10,6 +10,7 @@
 #include <stdbool.h> // Para bool, true, false (si usas booleanos para retornos)
 #include "../Lista/Lista.h"
 
+
 // --- Códigos de retorno sugeridos (opcional, pero ayuda a la legibilidad) ---
 #define DIC_OK 1
 #define DIC_ERROR 0 // O -1 si prefieres, pero sé consistente

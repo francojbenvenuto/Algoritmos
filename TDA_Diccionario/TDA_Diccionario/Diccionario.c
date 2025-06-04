@@ -190,6 +190,36 @@ int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_has
  }
 
 
+void vaciar_dic(tDiccionario* dic) {
+    if (!dic) return;
+
+    for (size_t i = 0; i < dic->capacidad; i++) {
+        tNodo* actual = dic->tabla[i];
+        while (actual != NULL) {
+            tNodo* siguiente = actual->sig; // Guardar el siguiente antes de liberar 'actual'
+            tElementoDic* elem = (tElementoDic*)actual->info;
+            free(elem->clave);
+            free(elem->valor);
+            free(elem); // Libera la estructura tElementoDic
+            free(actual); // Libera el nodo tNodo
+            actual = siguiente;
+        }
+        dic->tabla[i] = NULL; // Marcar la lista como vacía
+    }
+    // No liberamos dic->tabla ni dic mismo aquí, porque crear_dic los recibió
+    // y no los creó dinámicamente (solo el contenido de dic->tabla).
+    // Si crear_dic hiciera malloc para tDiccionario, aquí se haría free(dic).
+    // Si esta función debe liberar TODO y poner el puntero a NULL,
+    // necesitaría tDiccionario** pDic.
+    // Pero como está planteado tu crear_dic, solo se vacían los contenidos.
+    // Para cumplir con "libera toda la memoria" [cite: 13] en el contexto de tu crear_dic,
+    // SIEMPRE debes liberar el array 'dic->tabla'.
+    free(dic->tabla);
+    dic->tabla = NULL; // Buena práctica
+    dic->cantidad = 0;
+    dic->capacidad = 0; // Opcional, pero indica que ya no es usable.
+ }
+
 //////Funciones de Hash////
 
 
