@@ -15,11 +15,16 @@
 #define DIC_CLAVE_DUPLICADA 2
 #define DIC_CLAVE_NO_ENCONTRADA -2
 
+typedef size_t (*funcion_hash_t)(const void* clave, size_t tamClave);
+typedef int (*funcion_comparacion_t)(const void* clave1, const void* clave2, size_t tamClave);
+typedef void (*accion_dic_t)(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
+
 typedef struct
 {
     tLista *tabla;      // Vector de punteros a tNodo (cada puntero es una cabeza de lista)
     size_t capacidad;   // Cantidad de buckets (tamaño del vector tabla)
     size_t cantidad;    // Cantidad total de elementos (pares clave-valor) en el diccionario
+    funcion_hash_t func_hash;
 } tDiccionario;
 
 // Esta estructura es la que realmente se almacena en cada nodo de las listas
@@ -31,18 +36,12 @@ typedef struct tElementoDic
     size_t tamValor;
 } tElementoDic;
 
-
 // --- Prototipos de Funciones ---
 
-typedef size_t (*funcion_hash_t)(const void* clave, size_t tamClave);
-typedef int (*funcion_comparacion_t)(const void* clave1, const void* clave2, size_t tamClave);
-typedef void (*accion_dic_t)(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
-
-
-int crear_dic(tDiccionario* dic, size_t capacidad); // [cite: 9]
-int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void* valor, size_t tamValor, funcion_hash_t hash);
-int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, void* valor, size_t tamValorDestino, funcion_hash_t hash);
-int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_hash_t hash);
+int crear_dic(tDiccionario* dic, size_t capacidad, funcion_hash_t hash_func_param);
+int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void* valor, size_t tamValor);
+int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, void* valor, size_t tamValorDestino);
+int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave);
 void recorrer_dic(tDiccionario* dic, accion_dic_t accion, void* contexto);
 void vaciar_dic(tDiccionario* dic);
 

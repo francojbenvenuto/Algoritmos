@@ -35,10 +35,10 @@
 1749000487 c:\users\dario\onedrive\desktop\programacion\algoritmos\tda_diccionario\lista\lista.c
 	"Lista.h"
 
-1749008976 source:c:\users\cacer\desktop\algoritmos\tda_diccionario\tda_diccionario\diccionario.c
+1749076648 source:c:\users\cacer\desktop\algoritmos\tda_diccionario\tda_diccionario\diccionario.c
 	"Diccionario.h"
 
-1749006880 c:\users\cacer\desktop\algoritmos\tda_diccionario\tda_diccionario\diccionario.h
+1749076648 c:\users\cacer\desktop\algoritmos\tda_diccionario\tda_diccionario\diccionario.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -50,8 +50,10 @@
 	<stdlib.h>
 	<string.h>
 
-1749010165 source:c:\users\cacer\desktop\algoritmos\tda_diccionario\tda_diccionario\main.c
+1749083362 source:c:\users\cacer\desktop\algoritmos\tda_diccionario\tda_diccionario\main.c
 	<stdio.h>
+	<stdlib.h>
 	<string.h>
+	<ctype.h>
 	"Diccionario.h"
 

@@ -1,8 +1,8 @@
 #include "Diccionario.h"
 
-int crear_dic(tDiccionario* dic, size_t capacidad)
+int crear_dic(tDiccionario* dic, size_t capacidad, funcion_hash_t hash_param)
 {
-    if (!dic)
+    if (!dic || !hash_param)
         return DIC_ERROR;
 
     dic->tabla = (tLista*) calloc(capacidad, sizeof(tLista));
@@ -11,22 +11,22 @@ int crear_dic(tDiccionario* dic, size_t capacidad)
 
     dic->capacidad = capacidad;
     dic->cantidad = 0;
+    dic->func_hash = hash_param;
     return DIC_OK;
 }
 
-int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void* valor, size_t tamValor, funcion_hash_t hash) // Usando el typedef
+int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void* valor, size_t tamValor)
 {
-    if (!dic || !clave || !valor || !hash)
+    if (!dic || !clave || !valor || !dic->func_hash)
         return DIC_ERROR;
     if (dic->capacidad == 0)
-        return DIC_ERROR; // Evitar división por cero si capacidad es 0
+        return DIC_ERROR;
 
-    size_t indice = hash(clave, tamClave) % dic->capacidad;
+    size_t indice = dic->func_hash(clave, tamClave) % dic->capacidad;
     tLista *pListaEnBucket = &dic->tabla[indice]; // Puntero a la cabeza de la lista en el bucket
     tNodo *Actual = *pListaEnBucket;
 
-    // Buscar si la clave ya existe para ACTUALIZAR el valor
-    while(Actual)
+    while(Actual) // Buscar si la clave ya existe para ACTUALIZAR el valor
     {
         tElementoDic *elem = (tElementoDic *)Actual->info;
         if(elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0)
@@ -93,16 +93,14 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
     return DIC_OK;
 }
 
-
-int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, void* valorDestino, size_t tamValorDestino, funcion_hash_t hash)
+int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, void* valorDestino, size_t tamValorDestino)
 {
-    if (!dic || !clave || !valorDestino || !hash)
+    if (!dic || !clave || !valorDestino || !dic->func_hash)
         return DIC_ERROR;
     if (dic->capacidad == 0)
         return DIC_ERROR;
 
-
-    size_t indice = hash(clave, tamClave) % dic->capacidad;
+    size_t indice = dic->func_hash(clave, tamClave) % dic->capacidad;
     tLista listaBucket = dic->tabla[indice];
     tNodo* actual = listaBucket;
 
@@ -122,14 +120,14 @@ int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, voi
     return DIC_CLAVE_NO_ENCONTRADA;
 }
 
-int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_hash_t hash)
+int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave)
 {
-    if (!dic || !clave || !hash)
+    if (!dic || !clave || !dic->func_hash)
         return DIC_ERROR;
     if (dic->capacidad == 0)
         return DIC_ERROR;
 
-    size_t indice = hash(clave, tamClave) % dic->capacidad;
+    size_t indice = dic->func_hash(clave, tamClave) % dic->capacidad;
     tLista *pLista = &(dic->tabla[indice]);
     tNodo *actual = *pLista;
     tNodo *anterior = NULL;
@@ -161,8 +159,6 @@ int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave, funcion_has
     }
     return DIC_CLAVE_NO_ENCONTRADA;
 }
-
-
 
  void recorrer_dic(tDiccionario* dic, accion_dic_t accion, void* contexto)
  {
