@@ -45,7 +45,7 @@ int sacar_dic(tDiccionario* dic, const void* clave, size_t tamClave);
 void recorrer_dic(tDiccionario* dic, accion_dic_t accion, void* contexto);
 void vaciar_dic(tDiccionario* dic);
 
-
+void imprimir_clave_valor_str(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
 size_t hash_simple(const void* clave, size_t tamClave); //anda a saber q mierda es este
 size_t hash_string(const void *clave, size_t tamClave); //djb2
 

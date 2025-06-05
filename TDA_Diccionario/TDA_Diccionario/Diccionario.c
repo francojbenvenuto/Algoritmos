@@ -214,9 +214,6 @@ void imprimir_clave_valor_str(const void* clave, size_t tamClave, void* valor, s
 }
 
 
-
-
-
 //////Funciones de Hash////
 
 size_t hash_simple(const void* clave, size_t tamClave)
