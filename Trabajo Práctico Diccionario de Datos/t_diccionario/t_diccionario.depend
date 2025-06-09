@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1749436416 source:c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\t_diccionario\t_diccionario.c
+	"t_diccionario.h"
+
+1749436416 c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\t_diccionario\t_diccionario.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stddef.h>
+	"../Lista/Lista.h"
+
+1749426511 c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\lista\lista.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

@@ -1,5 +1,5 @@
-#ifndef DICCIONARIO_H_INCLUDED
-#define DICCIONARIO_H_INCLUDED
+#ifndef T_DICCIONARIO_H_INCLUDED
+#define T_DICCIONARIO_H_INCLUDED
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,4 +50,4 @@ size_t hash_simple(const void* clave, size_t tamClave); //sebita
 size_t hash_string(const void *clave, size_t tamClave); //djb2
 
 
-#endif // DICCIONARIO_H_INCLUDED
+#endif // T_DICCIONARIO_H_INCLUDED
