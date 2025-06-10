@@ -7,7 +7,7 @@
 #include <stddef.h>
 #include "../Lista/Lista.h"
 
-// --- Códigos de retorno ---
+// --- Codigos de retorno ---
 
 #define DIC_OK 1
 #define DIC_ERROR 0
@@ -22,7 +22,7 @@ typedef void (*accion_dic_t)(const void* clave, size_t tamClave, void* valor, si
 typedef struct
 {
     tLista *tabla;      // Vector de punteros a tNodo (cada puntero es una cabeza de lista)
-    size_t capacidad;   // Cantidad de buckets (tamaño del vector tabla)
+    size_t capacidad;   // Cantidad de buckets (tamano del vector tabla)
     size_t cantidad;    // Cantidad total de elementos (pares clave-valor) en el diccionario
     funcion_hash_t func_hash;
 } tDiccionario;
@@ -50,4 +50,6 @@ size_t hash_simple(const void* clave, size_t tamClave); //sebita
 size_t hash_string(const void *clave, size_t tamClave); //djb2
 
 
-#endif // T_DICCIONARIO_H_INCLUDED
+#endif  // T_DICCIONARIO_H_INCLUDED
+
+

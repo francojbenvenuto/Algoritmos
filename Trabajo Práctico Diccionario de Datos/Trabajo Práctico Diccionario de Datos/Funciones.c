@@ -1,8 +1,31 @@
 #include "Funciones.h"
 
+
+void ProcesarRuta(char *rutaArchivo)
+{
+    char *aux = strchr(rutaArchivo,'\n');
+    if(aux != NULL)
+        *aux = '\0';
+
+    size_t len = strlen(rutaArchivo);
+    if (len > 0)
+    {
+        if (len < 4 || strcmp(rutaArchivo + len - 4, ".txt") != 0)
+        {
+            if (len + strlen(".txt") < MAX_RUTA_ARCHIVO)
+                strcat(rutaArchivo, ".txt");
+        }
+        else puts("Error: La ruta del archivo es demasiado larga para anadir '.txt'");
+    }
+    else puts("Error: No se ingreso una ruta de archivo.\n");
+}
+
+
+
+
 void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnalizar, long *contadorPalabrasTotales, long *contadorEspaciosTotales, long *contadorSignosTotales)
 {
-    const char *delimitadoresPalabras = " \t\n\r\f\v.,;:!?\"'()[]{}<>-_+=*&^%$#@~/|\\0123456789"; // Delimitadores para la extracción de palabras con strtok
+    const char *delimitadoresPalabras = " \t\n\r\f\v.,;:!?\"'()[]{}<>-_+=*&^%$#@~/|\\0123456789"; // Delimitadores para la extraccion de palabras con strtok
     char *token,*punteroCaracter,palabraProcesada[MAX_LARGO_PALABRA];
     int ValorActual;
 
@@ -10,7 +33,7 @@ void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnali
     if(act)
         *act = '\0';
 
-    // --- PASADA 1: Contar espacios y signos de puntuación ---
+    // --- PASADA 1: Contar espacios y signos de puntuacion ---
     for (punteroCaracter = lineaAnalizar; *punteroCaracter != '\0'; punteroCaracter++)
     {
         if (isspace(*punteroCaracter))
@@ -29,10 +52,7 @@ void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnali
         int indiceDestino = 0;
         for (int i = 0; token[i] != '\0' && indiceDestino < MAX_LARGO_PALABRA - 1; i++)
         {
-            if (isalpha(token[i]))
-            {
                 palabraProcesada[indiceDestino++] = tolower(token[i]);
-            }
         }
         palabraProcesada[indiceDestino] = '\0';
 
@@ -71,7 +91,7 @@ void accion_imprimir_dic(const void* clave, size_t tamClave, void* valor, size_t
     }
     else
     {
-        printf("Palabra: \"%-20s\" -> Valor: [Dato no válido o inesperado]\n", palabra);
+        printf("Palabra: \"%-20s\" -> Valor: [Dato no vï¿½lido o inesperado]\n", palabra);
     }
 }
 
@@ -149,23 +169,4 @@ void mostrar_lista_dic(tLista *pl)
         printf("-%d-", *((int*)((tElementoDic*)(*pl)->info)->valor));
         pl=&(*pl)->sig;
     }
-}
-
-void ProcesarRuta(char *rutaArchivo)
-{
-    char *aux = strchr(rutaArchivo,'\n');
-    if(aux != NULL)
-        *aux = '\0';
-
-    size_t len = strlen(rutaArchivo);
-    if (len > 0)
-    {
-        if (len < 4 || strcmp(rutaArchivo + len - 4, ".txt") != 0)
-        {
-            if (len + strlen(".txt") < MAX_RUTA_ARCHIVO)
-                strcat(rutaArchivo, ".txt");
-        }
-        else puts("Error: La ruta del archivo es demasiado larga para anadir '.txt'");
-    }
-    else puts("Error: No se ingreso una ruta de archivo.\n");
 }

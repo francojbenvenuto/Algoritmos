@@ -16,9 +16,9 @@ int main()
         return ERROR;
     }
 
-    ProcesarRuta(rutaArchivo);
-
-    pf = fopen(rutaArchivo, "r");
+    ProcesarRuta(rutaArchivo); // Procesar la ruta para asegurarnos de que tenga el formato correcto
+    
+    pf = fopen(rutaArchivo, "r"); // Intentar abrir el archivo
     if (!pf)
     {
         puts("Error al intentar abrir el archivo especificado");
@@ -33,7 +33,7 @@ int main()
     long totalSignosPuntuacion = 0;
     tDiccionario miDiccionario;
 
-    if (crear_dic(&miDiccionario, 100, hash_string) != DIC_OK)
+    if (crear_dic(&miDiccionario, 100, hash_string) != DIC_OK) // Crear diccionario con el tdiccionario, 100 buckets y hash_string como funcion de hash
     {
         puts("Error: No se pudo crear el diccionario.\n");
         fclose(pf);
@@ -41,7 +41,7 @@ int main()
     }
 
     char linea[512];
-    while(fgets(linea,sizeof(linea),pf))
+    while(fgets(linea,sizeof(linea),pf))       // Leer cada linea del archivo hasta el final y procesarla con el diccionario
     {
         ProcesarLineaParaDiccionarioYContadores(&miDiccionario, linea, &totalPalabras, &totalEspacios, &totalSignosPuntuacion);
     }
