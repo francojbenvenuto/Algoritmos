@@ -22,12 +22,12 @@ typedef void (*accion_dic_t)(const void* clave, size_t tamClave, void* valor, si
 typedef struct
 {
     tLista *tabla;      // Vector de punteros a tNodo (cada puntero es una cabeza de lista)
-    size_t capacidad;   // Cantidad de buckets (tamano del vector tabla)
+    size_t capacidad;   // (tamano del vector tabla)
     size_t cantidad;    // Cantidad total de elementos (pares clave-valor) en el diccionario
     funcion_hash_t func_hash;
 } tDiccionario;
 
-// Esta estructura es la que realmente se almacena en cada nodo de las listas
+//  estructura se almacena en cada nodo de las listas
 typedef struct tElementoDic
 {
     void* clave;
@@ -36,7 +36,6 @@ typedef struct tElementoDic
     size_t tamValor;
 } tElementoDic;
 
-// --- Prototipos de Funciones ---
 
 int crear_dic(tDiccionario* dic, size_t capacidad, funcion_hash_t hash_func_param);
 int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void* valor, size_t tamValor);
@@ -47,7 +46,7 @@ void vaciar_dic(tDiccionario* dic);
 
 void imprimir_clave_valor_str(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
 size_t hash_simple(const void* clave, size_t tamClave); //sebita
-size_t hash_string(const void *clave, size_t tamClave); //djb2
+size_t hash_string(const void *clave, size_t tamClave); //formato djb2 (no usado)
 
 
 #endif  // T_DICCIONARIO_H_INCLUDED

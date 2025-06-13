@@ -91,12 +91,15 @@ void accion_imprimir_dic(const void* clave, size_t tamClave, void* valor, size_t
     }
     else
     {
-        printf("Palabra: \"%-20s\" -> Valor: [Dato no v�lido o inesperado]\n", palabra);
+        printf("Palabra: \"%-20s\" -> Valor: [Dato no valido o inesperado]\n", palabra);
     }
 }
 
-void mostrarPodioDic(tLista *pl)
-{
+// ============================================================================
+// TODO lo relacionado a podio esta mal. reeplantear con lo de la clase
+// ============================================================================
+void mostrarPodioDic(tLista *pl)     
+{ 
     tNodo *actual = *pl; // Puntero para recorrer la lista ordenada
     int puesto_real = 1; // El "ranking" real, que salta con los empates
 
@@ -129,6 +132,8 @@ void mostrarPodioDic(tLista *pl)
         }
     }
 }
+// ============================================================================
+
 
 void BajarPalabras(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto)
 {
