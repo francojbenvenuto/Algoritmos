@@ -39,7 +39,7 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
                 if (!elem->valor)
                     return DIC_ERROR_MEMORIA;
             }
-            else if (!elem->valor && tamValor > 0)     // Si antes no habia valor o era NULL
+            else if (!elem->valor && tamValor > 0)     // Si antes no había valor o era NULL
             {
                 elem->valor = malloc(tamValor);
                 if(!elem->valor)
@@ -50,9 +50,9 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
                 free(elem->valor);
                 elem->valor = NULL;
             }
-            // Si elem->valor ya tiene el tamano correcto, podemos reusar el buffer
+            // Si elem->valor ya tiene el tamaño correcto, podemos reusar el buffer
             // o si es NULL y tamValor es 0, no hacer nada.
-            if (tamValor > 0 && elem->valor)   // Solo copiar si hay algo que copiar y donde copiar
+            if (tamValor > 0 && elem->valor)   // Solo copiar si hay algo que copiar y dónde copiar
             {
                 memcpy(elem->valor, valor, tamValor);
             }
@@ -225,15 +225,16 @@ size_t hash_simple(const void* clave, size_t tamClave)
     return hash;
 }
 
-// Funcion de hash para strings (djb2)
+// Función de hash para strings (djb2)
 size_t hash_string(const void *clave, size_t tamClave)
 {
     const char *str = (const char *)clave;
-    size_t hash = 5381; // Valor inicial comun para djb2
+    size_t hash = 5381; // Valor inicial común para djb2
     size_t i;
 
-    for (i = 0; i < tamClave; i++)
+    for (i = 0; i < tamClave; i++) {
         hash = ((hash << 5) + hash) + str[i]; // hash * 33 + str[i]
+    }
 
     return hash;
 }

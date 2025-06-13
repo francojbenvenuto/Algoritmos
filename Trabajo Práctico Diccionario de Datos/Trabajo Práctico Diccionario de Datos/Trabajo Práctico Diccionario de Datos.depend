@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1749435974 source:c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.c
+1749853481 source:c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.c
 	"Funciones.h"
 
-1749437015 c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.h
+1749853562 c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -10,7 +10,7 @@
 	"..\t_diccionario\t_diccionario.h"
 	"..\Lista\Lista.h"
 
-1749436416 c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\t_diccionario\t_diccionario.h
+1749837971 c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\t_diccionario\t_diccionario.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -22,6 +22,6 @@
 	<stdlib.h>
 	<string.h>
 
-1749437333 source:c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\main.c
+1749853740 source:c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\main.c
 	"Funciones.h"
 

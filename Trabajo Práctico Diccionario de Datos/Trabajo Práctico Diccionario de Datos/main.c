@@ -17,7 +17,7 @@ int main()
     }
 
     ProcesarRuta(rutaArchivo); // Procesar la ruta para asegurarnos de que tenga el formato correcto
-    
+
     pf = fopen(rutaArchivo, "r"); // Intentar abrir el archivo
     if (!pf)
     {
@@ -33,7 +33,7 @@ int main()
     long totalSignosPuntuacion = 0;
     tDiccionario miDiccionario;
 
-    if (crear_dic(&miDiccionario, 100, hash_string) != DIC_OK) // Crear diccionario con el tdiccionario, 100 buckets y hash_string como funcion de hash
+    if (crear_dic(&miDiccionario, 100, hash_simple) != DIC_OK) // Crear diccionario con el tdiccionario, 100 buckets y hash_simple como funcion de hash
     {
         puts("Error: No se pudo crear el diccionario.\n");
         fclose(pf);
@@ -46,15 +46,20 @@ int main()
         ProcesarLineaParaDiccionarioYContadores(&miDiccionario, linea, &totalPalabras, &totalEspacios, &totalSignosPuntuacion);
     }
 
-    //recorrer_dic(&miDiccionario, accion_imprimir_dic, NULL);
+//    recorrer_dic(&miDiccionario, accion_imprimir_dic, NULL);
 
     fclose(pf);
 
-    tLista palabras;
-    crear_lista(&palabras);
+    tLista podio;//palabras;
+    crear_lista(&podio);
+//    crear_lista(&palabras);
 
-    recorrer_dic(&miDiccionario, BajarPalabras, &palabras);
-    //mostrar_lista_dic(&palabras);
+//    recorrer_dic(&miDiccionario, BajarPalabras, &palabras);
+    recorrer_dic(&miDiccionario, BajarPalabrasPodio, &podio);
+
+//    mostrar_lista_dic(&palabras);
+//    mostrar_lista_dic(&podio);
+
 
     vaciar_dic(&miDiccionario);
 
@@ -68,13 +73,15 @@ int main()
     printf("  - Total de Espacios: %ld\n",totalEspacios);
     printf("  - Total de Signos de Puntuacion: %ld\n\n",totalSignosPuntuacion);
 
-    mostrarPodioDic(&palabras);
+//    mostrarPodioDic(&palabras);
+    mostrarPodioDic(&podio);
 
     printf("=========================================\n");
     printf("   Analisis de Texto Finalizado\n");
     printf("=========================================\n");
 
-    vaciarLista(&palabras);
+    vaciarLista(&podio);
+//    vaciarLista(&palabras);
 
     return OK;
 }

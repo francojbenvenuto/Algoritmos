@@ -1,6 +1,5 @@
 #include "Funciones.h"
 
-
 void ProcesarRuta(char *rutaArchivo)
 {
     char *aux = strchr(rutaArchivo,'\n');
@@ -19,9 +18,6 @@ void ProcesarRuta(char *rutaArchivo)
     }
     else puts("Error: No se ingreso una ruta de archivo.\n");
 }
-
-
-
 
 void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnalizar, long *contadorPalabrasTotales, long *contadorEspaciosTotales, long *contadorSignosTotales)
 {
@@ -52,7 +48,7 @@ void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnali
         int indiceDestino = 0;
         for (int i = 0; token[i] != '\0' && indiceDestino < MAX_LARGO_PALABRA - 1; i++)
         {
-                palabraProcesada[indiceDestino++] = tolower(token[i]);
+            palabraProcesada[indiceDestino++] = tolower(token[i]);
         }
         palabraProcesada[indiceDestino] = '\0';
 
@@ -95,13 +91,90 @@ void accion_imprimir_dic(const void* clave, size_t tamClave, void* valor, size_t
     }
 }
 
-// ============================================================================
-// TODO lo relacionado a podio esta mal. reeplantear con lo de la clase
-// ============================================================================
-void mostrarPodioDic(tLista *pl)     
-{ 
+void *ObtenerPuntajeDeCorte(tLista* pl, int (*cmp)(const void*,const void*))
+{
+    int empates,pos = 1;
+    void *puntajeDeCorte = NULL;
+    tNodo *aux,*act = *pl;
+
+    while (act && pos <= 5)
+    {
+        puntajeDeCorte = act->info;
+        empates = 0;
+        aux = act;
+        while (aux && cmp(act->info, aux->info) == 0)
+        {
+            empates++;
+            aux = aux->sig;
+        }
+        pos += empates;
+        act = aux;
+    }
+    return puntajeDeCorte;
+}
+
+int ActualizarPodio(tLista *pl, const void *pd, size_t tam, int (*cmp)(const void*,const void*))
+{
+    void *puntajeCorteActual = ObtenerPuntajeDeCorte(pl, cmp);
+    if (puntajeCorteActual && cmp(pd, puntajeCorteActual) > 0)
+        return 0; //Es menor que el ultimo del podio
+
+    tLista *aux = pl;
+    while (*aux && cmp(pd, (*aux)->info) > 0)
+        aux = &(*aux)->sig;
+    tNodo* nue = (tNodo*)malloc(sizeof(tNodo));
+    if (!nue)
+        return 0;
+    nue->info = malloc(tam);
+    if (!nue->info)
+    {
+        free(nue);
+        return 0;
+    }
+    memcpy(nue->info, pd, tam);
+    nue->tamInfo = tam;
+    nue->sig = *aux;
+    *aux = nue;
+
+    void *nuevoPuntajeCorte = ObtenerPuntajeDeCorte(pl, cmp);
+    if (!nuevoPuntajeCorte)
+        return 1;
+
+    tNodo* ultimoDelPodio = NULL;
+    tNodo* act = *pl;
+
+    while (act && cmp(act->info, nuevoPuntajeCorte) <= 0)
+    {
+        ultimoDelPodio = act;
+        act = act->sig;
+    }
+
+    if (ultimoDelPodio)
+    {
+        if (ultimoDelPodio->sig)
+            liberarNodos(&ultimoDelPodio->sig);
+    }
+    else liberarNodos(pl);
+
+    return 1;
+}
+
+void liberarNodos(tLista *pl)
+{
+    tNodo *aux;
+    while(*pl)
+    {
+        aux = *pl;
+        *pl = aux->sig;
+        free(aux->info);
+        free(aux);
+    }
+}
+
+void mostrarPodioDic(tLista *pl)
+{
     tNodo *actual = *pl; // Puntero para recorrer la lista ordenada
-    int puesto_real = 1; // El "ranking" real, que salta con los empates
+    int puesto_real = 1;
 
     puts("--- Podio Palabras mas utilizadas ---");
 
@@ -132,8 +205,27 @@ void mostrarPodioDic(tLista *pl)
         }
     }
 }
-// ============================================================================
 
+void BajarPalabrasPodio(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto)
+{
+    tLista *ctx = (tLista *)contexto;
+    tElementoDic info;
+
+    info.clave = malloc(tamClave);
+    if (!info.clave)
+        return;
+    memcpy(info.clave, clave, tamClave);
+    info.tamClave = tamClave;
+    info.valor = malloc(tamValor);
+    if (!info.valor)
+    {
+        free(info.clave);
+        return;
+    }
+    memcpy(info.valor, valor, tamValor);
+    info.tamValor = tamValor;
+    ActualizarPodio(ctx, &info, sizeof(tElementoDic), cmptElem);
+}
 
 void BajarPalabras(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto)
 {
@@ -174,4 +266,5 @@ void mostrar_lista_dic(tLista *pl)
         printf("-%d-", *((int*)((tElementoDic*)(*pl)->info)->valor));
         pl=&(*pl)->sig;
     }
+    puts("\n");
 }

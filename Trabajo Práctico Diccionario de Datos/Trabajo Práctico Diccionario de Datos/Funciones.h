@@ -13,11 +13,13 @@
 #define OK 0
 #define ERROR -1
 
-
 void ProcesarRuta(char *rutaArchivo);
 void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnalizar, long *contadorPalabrasTotales, long *contadorEspaciosTotales, long *contadorSignosTotales);
 void accion_imprimir_dic(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
 void BajarPalabras(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
+void BajarPalabrasPodio(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
+void *ObtenerPuntajeDeCorte(tLista* pl, int (*cmp)(const void*,const void*));
+void liberarNodos(tLista *pl);
 int cmptElem(const void *a, const void *b);
 void mostrarPodioDic(tLista *pl);
 void mostrar_lista_dic(tLista *pl);

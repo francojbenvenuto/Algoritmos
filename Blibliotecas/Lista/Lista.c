@@ -5,6 +5,58 @@ void crear_lista(tLista *pl)
     *pl = NULL;
 }
 
+int listaVacia(const tLista *p)
+{
+    return *p == NULL;
+}
+
+int listaLlena(const tLista *p, size_t tam)
+{
+    tNodo *aux = (tNodo *)malloc(sizeof(tNodo));
+    void *info = malloc(tam);
+
+    free(aux);
+    free(info);
+
+    return aux == NULL || info == NULL;
+}
+
+int vaciarLista(tLista *p)
+{
+    int cant = 0;
+    tNodo *aux;
+    while(*p)
+    {
+        aux = *p;
+        *p = aux->sig;
+        free(aux->info);
+        free(aux);
+        cant++;
+    }
+    return cant;
+}
+
+int vaciarListaYMostrar(tLista *p, void (*mostrar)(const void *, FILE *), FILE *fp)
+{
+    int cant = 0;
+    tNodo *aux;
+    while(*p)
+    {
+        aux = *p;
+        *p = aux->sig;
+
+        if(mostrar)
+        {
+            mostrar(aux->info, fp);
+        }
+
+        free(aux->info);
+        free(aux);
+        cant++;
+    }
+    return cant;
+}
+
 int poner_primero_lista(tLista *pl, const void *pd, size_t tam)
 {
     tNodo *nue = (tNodo*)malloc(sizeof(tNodo));
@@ -24,6 +76,14 @@ int poner_primero_lista(tLista *pl, const void *pd, size_t tam)
     *pl = nue;
 
     return 1; ///OK
+}
+
+int verPrimeroLista(const tLista *p, void *d, size_t tam)
+{
+    if (*p == NULL)
+        return 0;
+    memcpy(d, (*p)->info, MINIMO(tam, (*p)->tamInfo));
+    return 1;
 }
 
 int sacar_primero_lista(tLista *pl, void *pd, size_t tam)
@@ -61,6 +121,61 @@ int poner_ultimo_lista(tLista *pl, const void *pd, size_t tam)
     *pl = nue;
 
     return 1; ///OK
+}
+
+int sacarUltimoLista(tLista *p, void *d, size_t tam)
+{
+    if (!*p)
+        return 0;
+    while ((*p)->sig)
+        p = &(*p)->sig;
+    memcpy(d, (*p)->info, MINIMO(tam, (*p)->tamInfo));
+    free((*p)->info);
+    free(*p);
+    *p = NULL;
+    return 1;
+}
+
+int verUltimoLista(const tLista *p, void *d, size_t tam)
+{
+    if (!*p)
+        return 0;
+    while ((*p)->sig)
+        p = &(*p)->sig;
+    memcpy(d, (*p)->info, MINIMO(tam, (*p)->tamInfo));
+    return 1;
+}
+
+int mostrarListaAlReves(const tLista *p, void (*mostrar)(const void *, FILE *), FILE *fp)
+{
+    if (*p)
+    {
+        int n = mostrarListaAlReves(&(*p)->sig, mostrar, fp);
+        if (mostrar)
+        {
+            mostrar((*p)->info, fp);
+        }
+        return n + 1;
+    }
+    return 0;
+}
+
+int mostrarListaAlRevesYVaciar(tLista *p, void (*mostrar)(const void *, FILE *), FILE *fp)
+{
+    if (*p)
+    {
+        int n = mostrarListaAlRevesYVaciar(&(*p)->sig, mostrar, fp);
+
+        if (mostrar)
+        {
+            mostrar((*p)->info, fp);
+        }
+        free((*p)->info);
+        free(*p);
+        *p = NULL;
+        return n + 1;
+    }
+    return 0;
 }
 
 int poner_pos_lista(tLista *pl, const void *pd, size_t tam, unsigned pos)
@@ -109,7 +224,7 @@ int poner_orden_lista(tLista *pl, const void *pd, size_t tam, int (*cmp)(const v
     if(!nue)
         return 0; ///LISTA_LLENA
     nue->info = malloc(tam);
-    if(!nue->tamInfo)
+    if(!nue->info)
     {
         free(nue);
         return 0; ///LISTA_LLENA
@@ -122,6 +237,32 @@ int poner_orden_lista(tLista *pl, const void *pd, size_t tam, int (*cmp)(const v
     *pl = nue;
 
     return 1; ///OK
+}
+
+int poner_orden_lista_con_duplicados(tLista *pl, const void *pd, size_t tam, int (*cmp)(const void*,const void*))
+{
+    tNodo *nue;
+    int rc;
+
+    while(*pl && (rc = cmp(pd, (*pl)->info)) > 0)
+        pl = &(*pl)->sig;
+    nue = (tNodo*)malloc(sizeof(tNodo));
+    if(!nue)
+        return 0;
+    nue->info = malloc(tam);
+    if(!nue->info)
+    {
+        free(nue);
+        return 0;
+    }
+
+    memcpy(nue->info, pd, tam);
+    nue->tamInfo = tam;
+    nue->sig = *pl;
+
+    *pl = nue;
+
+    return 1;
 }
 
 int sacar_elem_lista(tLista *pl, void *pd, size_t tam, int (*cmp)(const void*,const void*))

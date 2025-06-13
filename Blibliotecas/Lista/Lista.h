@@ -17,6 +17,16 @@ typedef struct sNodo
 typedef tNodo *tLista;
 
 void crear_lista(tLista *pl);
+int vaciarLista(tLista *p);
+
+int listaVacia(const tLista *p);
+int listaLlena(const tLista *p, size_t tam);
+int vaciarListaYMostrar(tLista *p, void (*mostrar)(const void *, FILE *), FILE *fp);
+int verPrimeroLista(const tLista *p, void *d, size_t tam);
+int sacarUltimoLista(tLista *p, void *d, size_t tam);
+int verUltimoLista(const tLista *p, void *d, size_t tam);
+int mostrarListaAlReves(const tLista *p, void (*mostrar)(const void *, FILE *), FILE *fp);
+int mostrarListaAlRevesYVaciar(tLista *p, void (*mostrar)(const void *, FILE *), FILE *fp);
 
 int poner_primero_lista(tLista *pl,const void *pd, size_t tam);
 int sacar_primero_lista(tLista *pl,void *pd, size_t tam);
@@ -24,6 +34,8 @@ int poner_ultimo_lista(tLista *pl,const void *pd, size_t tam);
 
 int poner_pos_lista(tLista *pl,const void *pd, size_t tam,unsigned pos);
 int poner_orden_lista(tLista *pl,const void *pd,size_t tam, int (*cmp)(const void*,const void*));
+int poner_orden_lista_con_duplicados(tLista *pl, const void *pd, size_t tam, int (*cmp)(const void*,const void*));
+
 
 int sacar_elem_lista(tLista *pl, void *pd, size_t tam, int (*cmp)(const void*,const void*));
 int sacar_elem_ord_lista(tLista *pl, void *pd, size_t tam, int (*cmp)(const void*,const void*));
