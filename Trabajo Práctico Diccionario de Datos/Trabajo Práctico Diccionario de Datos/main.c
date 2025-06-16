@@ -58,12 +58,12 @@ int main()
 //  Diccionario completo, ahora se procesa la lista de palabras
 //=========================================================================================================================================
 
-    tLista podio;   
+    tLista podio;
     crear_lista(&podio);
 
     recorrer_dic(&miDiccionario, BajarPalabrasPodio, &podio); // en cada nodo realiza baja de palabras
 
-//    mostrar_lista_dic(&podio);
+    mostrar_lista_dic(&podio);
 
     vaciar_dic(&miDiccionario);
 

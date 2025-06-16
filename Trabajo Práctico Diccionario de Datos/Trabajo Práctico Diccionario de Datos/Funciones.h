@@ -4,6 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <windows.h>
+// Se define la constante manualmente en caso de que el SDK de Windows sea antiguo.
+#ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
+#endif
+// =========================================================================
 
 #include"..\t_diccionario\t_diccionario.h"
 #include"..\Lista\Lista.h"
@@ -11,7 +17,7 @@
 #define MAX_RUTA_ARCHIVO 512
 #define MAX_LARGO_PALABRA 100
 #define OK 0
-#define ERROR -1
+//#define ERROR -1
 
 void ProcesarRuta(char *rutaArchivo);
 void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnalizar, long *contadorPalabrasTotales, long *contadorEspaciosTotales, long *contadorSignosTotales);

@@ -6,7 +6,7 @@ void ProcesarRuta(char *rutaArchivo)
     if(aux != NULL)
         *aux = '\0';
 
-    size_t len = strlen(rutaArchivo);       //  Longitud de la ruta del archivo 
+    size_t len = strlen(rutaArchivo);       //  Longitud de la ruta del archivo
     if (len > 0)
     {
         if (len < 4 || strcmp(rutaArchivo + len - 4, ".txt") != 0) //  Comprobar si la ruta del archivo termina con '.txt' (puntero a inicio, va al final y vuelve 4)
@@ -77,7 +77,7 @@ void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnali
             {
                 printf("Advertencia: No se pudo insertar/actualizar la palabra '%s' en el diccionario.\n", palabraProcesada);
             }
-        
+
         token = strtok(NULL, delimitadoresPalabras);
     }
 }
@@ -130,15 +130,15 @@ void *ObtenerMenorPuntaje(tLista* LPodio, int (*cmp)(const void*,const void*))
 }
 
 int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int (*cmp)(const void*,const void*))
-{   
-    // estamos analizando el nodo actual del recorrido. 
+{
+    // estamos analizando el nodo actual del recorrido.
     void *puntajeCorteActual = ObtenerMenorPuntaje(LPodio, cmp);  // ultimo elemnto del podio
 
 //=========================================================================================================================================
-// caso 1: nodo actual es menor que el ultimo del podio    
+// caso 1: nodo actual es menor que el ultimo del podio
 //=========================================================================================================================================
-    if (puntajeCorteActual && cmp(ElemNuevo, puntajeCorteActual) > 0) 
-        return OK; 
+    if (puntajeCorteActual && cmp(ElemNuevo, puntajeCorteActual) > 0)
+        return OK;
 
 //=========================================================================================================================================
 // caso 2: nodo actual es mayor o igual que el ultimo del podio
@@ -147,8 +147,8 @@ int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int
     tLista *aux = LPodio;
     //recorremos el podio y sabemos en aux la posicion del nodo a ingresar(porque se insertan en orden)
     while (*aux && cmp(ElemNuevo, (*aux)->info) > 0)
-        aux = &(*aux)->sig;                     
-    
+        aux = &(*aux)->sig;
+
     tNodo* nue = (tNodo*)malloc(sizeof(tNodo));
     if (!nue)
         return ERROR;
@@ -161,8 +161,8 @@ int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int
     }
     memcpy(nue->info, ElemNuevo, tamElemen);
     nue->tamInfo = tamElemen;
-    nue->sig = *aux;  
-    *aux = nue;      
+    nue->sig = *aux;
+    *aux = nue;
     // insertamos el nuevo nodo en la lista (en siguiente guaramos la direccion del nodo siguiente y cambiamos aux por la direccion del nodo actual)
 
 
@@ -182,7 +182,7 @@ int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int
         ultimoDelPodio = act;
         act = act->sig;
     }
-  
+
     if (ultimoDelPodio)
     {
         if (ultimoDelPodio->sig)
@@ -208,7 +208,14 @@ void mostrarPodioDic(tLista *LPodio)
     tNodo *actual = *LPodio; // Puntero para recorrer la lista ordenada
     int puestoReal = 1;
 
-    puts("\033[1;35m+----------------------------+"); //  ANSI  magenta 
+    // == CÓDIGO PARA ACTIVAR COLORES ANSI EN LA CONSOLA DE WINDOWS ==
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD consoleMode;
+    GetConsoleMode(hConsole, &consoleMode);
+    SetConsoleMode(hConsole, consoleMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+    // ==================================================================
+
+    puts("\033[1;35m+----------------------------+"); //  ANSI  magenta
     puts(          "|   Podio Palabras TOP 5     |");
     puts(          "+----------------------------+\033[0m");
 
@@ -239,9 +246,9 @@ void mostrarPodioDic(tLista *LPodio)
                 break;
             default:
                 puts("\n\033[1;31mPuesto no valido\033[0m"); //  ANSI rojo
-                return ERROR;
+                //return ERROR;
                 break;
-            }   
+            }
             tNodo* palabrasEmpate = actual;
             while (palabrasEmpate && (*(int*)((tElementoDic*)palabrasEmpate->info)->valor) == puntaje_del_puesto)
             {
