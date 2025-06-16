@@ -23,7 +23,7 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
         return DIC_ERROR;
 
     size_t indice = dic->func_hash(clave, tamClave) % dic->capacidad;
-    tLista pListaEnBucket = dic->tabla[indice]; // Puntero a la cabeza de la lista en el bucket
+    tLista *pListaEnBucket = dic->tabla[indice]; // Puntero a la cabeza de la lista en el bucket
     tNodo *Actual = pListaEnBucket;
 
     /* calculo el indice de la posicion de la clave en la tabla, y con una tabla de búsqueda se busca la clave
@@ -44,7 +44,7 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
             }
             else if (elem->valor && tamValor == 0)     // Si el nuevo valor es "nada"
             {
-                free(elem->valor);
+                free(elem->valor); 
                 elem->valor = NULL;
             }
             // Si elem->valor ya tiene el tamano correcto, podemos reusar el buffer

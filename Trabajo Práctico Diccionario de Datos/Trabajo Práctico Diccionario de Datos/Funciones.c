@@ -182,7 +182,7 @@ int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int
         ultimoDelPodio = act;
         act = act->sig;
     }
-
+  
     if (ultimoDelPodio)
     {
         if (ultimoDelPodio->sig)
