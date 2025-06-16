@@ -5,7 +5,7 @@ int crear_dic(tDiccionario* dic, size_t capacidad, funcion_hash_t hash_param)
     if (!dic || !hash_param)
         return DIC_ERROR;
 
-    dic->tabla = (tLista*) calloc(capacidad, sizeof(tLista));
+    dic->tabla = (tLista*) calloc(capacidad, sizeof(tLista)); // calloc es para inicializar en null y no tener errores de acceso a memoria no inicializada
     if(!dic->tabla)
         return DIC_ERROR_MEMORIA;
 
@@ -23,8 +23,12 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
         return DIC_ERROR;
 
     size_t indice = dic->func_hash(clave, tamClave) % dic->capacidad;
-    tLista *pListaEnBucket = &dic->tabla[indice]; // Puntero a la cabeza de la lista en el bucket
-    tNodo *Actual = *pListaEnBucket;
+    tLista pListaEnBucket = dic->tabla[indice]; // Puntero a la cabeza de la lista en el bucket
+    tNodo *Actual = pListaEnBucket;
+
+    /* calculo el indice de la posicion de la clave en la tabla, y con una tabla de búsqueda se busca la clave
+       si la clave no existe, se devuelve DIC_CLAVE_NO_ENCONTRADA,
+       igualamos un nodo actual a la cabeza de la lista del bucket, para recorrer cada nodo de la lista*/
 
     while(Actual) // Buscar si la clave ya existe para ACTUALIZAR el valor
     {
@@ -32,14 +36,7 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
         if(elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0)
         {
             // Clave encontrada, actualizar valor
-            if (elem->tamValor != tamValor)
-            {
-                free(elem->valor);
-                elem->valor = malloc(tamValor);
-                if (!elem->valor)
-                    return DIC_ERROR_MEMORIA;
-            }
-            else if (!elem->valor && tamValor > 0)     // Si antes no habia valor o era NULL
+            if (!elem->valor && tamValor > 0)     // Si antes no habia valor o era NULL
             {
                 elem->valor = malloc(tamValor);
                 if(!elem->valor)
@@ -59,10 +56,13 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
             elem->tamValor = tamValor;
             return DIC_OK;
         }
-        Actual = Actual->sig;
-    }
 
-    // Si la clave no existe, crear el nuevo elemento y agregarlo
+        Actual = Actual->sig; //si no se encuentra, se pasa al siguiente nodo (manejo de colisiones)
+    }
+//=========================================================================================================================================
+//  Si la clave no existe, crear el nuevo elemento y agregarlo
+//=========================================================================================================================================
+    // Crear un nuevo elemento diccionario    
     tElementoDic nuevoElemento;
 
     nuevoElemento.clave = malloc(tamClave);
@@ -103,7 +103,10 @@ int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, voi
     size_t indice = dic->func_hash(clave, tamClave) % dic->capacidad;
     tLista listaBucket = dic->tabla[indice];
     tNodo* actual = listaBucket;
-
+    /* calculo el indice de la posicion de la clave en la tabla, y con una tabla de búsqueda se busca la clave
+       si la clave no existe, se devuelve DIC_CLAVE_NO_ENCONTRADA,
+       igualamos un nodo actual a la cabeza de la lista del bucket, para recorrer cada nodo de la lista*/
+    
     while (actual)
     {
         tElementoDic* elem = (tElementoDic*)actual->info;
@@ -113,9 +116,10 @@ int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, voi
             // Clave encontrada. Copiar el valor al buffer del usuario.
             size_t bytesACopiar = (tamValorDestino < elem->tamValor) ? tamValorDestino : elem->tamValor;
             memcpy(valorDestino, elem->valor, bytesACopiar);
+            // se copia el valor almacenado en el nodo actual a la variable del usuario
             return DIC_OK;
         }
-        actual = actual->sig;
+        actual = actual->sig; //si no se encuentra, se pasa al siguiente nodo (manejo de colisiones)
     }
     return DIC_CLAVE_NO_ENCONTRADA;
 }
@@ -225,7 +229,7 @@ size_t hash_simple(const void* clave, size_t tamClave)
     return hash;
 }
 
-// Funcion de hash para strings (djb2)
+// Funcion de hash (djb2)
 size_t hash_string(const void *clave, size_t tamClave)
 {
     const char *str = (const char *)clave;

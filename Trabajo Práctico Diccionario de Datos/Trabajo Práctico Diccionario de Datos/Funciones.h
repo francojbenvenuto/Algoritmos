@@ -16,12 +16,14 @@
 void ProcesarRuta(char *rutaArchivo);
 void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnalizar, long *contadorPalabrasTotales, long *contadorEspaciosTotales, long *contadorSignosTotales);
 void accion_imprimir_dic(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
+
+int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int (*cmp)(const void*,const void*));
 void BajarPalabras(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
 void BajarPalabrasPodio(const void* clave, size_t tamClave, void* valor, size_t tamValor, void* contexto);
-void *ObtenerPuntajeDeCorte(tLista* pl, int (*cmp)(const void*,const void*));
+void *ObtenerMenorPuntaje(tLista* LPodio, int (*cmp)(const void*,const void*));
 void liberarNodos(tLista *pl);
 int cmptElem(const void *a, const void *b);
-void mostrarPodioDic(tLista *pl);
+void mostrarPodioDic(tLista *LPodio);
 void mostrar_lista_dic(tLista *pl);
 
 #endif // FUNCIONES_H_INCLUDED

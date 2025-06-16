@@ -21,12 +21,17 @@ int main()
     pf = fopen(rutaArchivo, "r"); // Intentar abrir el archivo
     if (!pf)
     {
-        puts("Error al intentar abrir el archivo especificado");
+        puts("Error al intentar abrir el archivo especificado\n");
         printf("Asegurese de que el archivo '%s' exista y tenga permisos de lectura.\n", rutaArchivo);
         return ERROR;
     }
 
     printf("\nArchivo '%s' abierto exitosamente.\n\n", rutaArchivo);
+
+
+    // ============================================================================================================================================
+    //  empieza el procesamiento del archivo
+    // ============================================================================================================================================
 
     long totalPalabras = 0;
     long totalEspacios = 0;
@@ -49,17 +54,16 @@ int main()
 //    recorrer_dic(&miDiccionario, accion_imprimir_dic, NULL);
 
     fclose(pf);
+//=========================================================================================================================================
+//  Diccionario completo, ahora se procesa la lista de palabras
+//=========================================================================================================================================
 
-    tLista podio;//palabras;
+    tLista podio;   
     crear_lista(&podio);
-//    crear_lista(&palabras);
 
-//    recorrer_dic(&miDiccionario, BajarPalabras, &palabras);
-    recorrer_dic(&miDiccionario, BajarPalabrasPodio, &podio);
+    recorrer_dic(&miDiccionario, BajarPalabrasPodio, &podio); // en cada nodo realiza baja de palabras
 
-//    mostrar_lista_dic(&palabras);
 //    mostrar_lista_dic(&podio);
-
 
     vaciar_dic(&miDiccionario);
 
@@ -73,7 +77,6 @@ int main()
     printf("  - Total de Espacios: %ld\n",totalEspacios);
     printf("  - Total de Signos de Puntuacion: %ld\n\n",totalSignosPuntuacion);
 
-//    mostrarPodioDic(&palabras);
     mostrarPodioDic(&podio);
 
     printf("=========================================\n");
@@ -81,7 +84,6 @@ int main()
     printf("=========================================\n");
 
     vaciarLista(&podio);
-//    vaciarLista(&palabras);
 
     return OK;
 }
