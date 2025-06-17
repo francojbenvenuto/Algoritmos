@@ -2,9 +2,10 @@
 
 int main()
 {
-    int flag = 1;
+    int flag=1;
     do
     {
+        flag = 0;
         char rutaArchivo[MAX_RUTA_ARCHIVO];
         FILE *pf;
         system("cls");
@@ -89,16 +90,14 @@ int main()
 
         vaciarLista(&podio);
 
-
         printf("Desea ingresar otro archivo? (1: Si, 0: No): ");
         scanf("%d", &flag);
         fflush(stdin);
         if (flag != 1 && flag != 0)
         {
             puts("Opcion invalida. Saliendo del programa.");
-            flag = 0; 
-        } 
-    } while (flag == 1);
+            flag = 0;
+        }
+    }while(flag == 1);
     return OK;
 }
- 

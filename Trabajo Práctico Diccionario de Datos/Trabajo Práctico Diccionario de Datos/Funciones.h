@@ -5,7 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <windows.h>
-// Se define la constante manualmente en caso de que el SDK de Windows sea antiguo.
+// ANSI para windows 10 y evitar error en windows 11 :)
 #ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
 #define ENABLE_VIRTUAL_TERMINAL_PROCESSING 0x0004
 #endif
@@ -17,7 +17,7 @@
 #define MAX_RUTA_ARCHIVO 512
 #define MAX_LARGO_PALABRA 100
 #define OK 0
-//#define ERROR -1
+//#define ERROR -1  //incuido en windows.h
 
 void ProcesarRuta(char *rutaArchivo);
 void ProcesarLineaParaDiccionarioYContadores(tDiccionario *dic, char *lineaAnalizar, long *contadorPalabrasTotales, long *contadorEspaciosTotales, long *contadorSignosTotales);
