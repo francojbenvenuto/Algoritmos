@@ -26,14 +26,15 @@
 1750054007 source:c:\users\cacer\desktop\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\main.c
 	"Funciones.h"
 
-1750049613 source:c:\programacion\algoritmos\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\main.c
+1750121116 source:c:\programacion\algoritmos\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\main.c
 	"Funciones.h"
 
-1750049860 c:\programacion\algoritmos\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.h
+1750117635 c:\programacion\algoritmos\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
+	<windows.h>
 	"..\t_diccionario\t_diccionario.h"
 	"..\Lista\Lista.h"
 
@@ -49,6 +50,6 @@
 	<stdlib.h>
 	<string.h>
 
-1750052944 source:c:\programacion\algoritmos\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.c
+1750120241 source:c:\programacion\algoritmos\algoritmos\trabajo práctico diccionario de datos\trabajo práctico diccionario de datos\funciones.c
 	"Funciones.h"
 

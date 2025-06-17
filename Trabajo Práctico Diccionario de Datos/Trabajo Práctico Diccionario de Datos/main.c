@@ -2,88 +2,103 @@
 
 int main()
 {
-    char rutaArchivo[MAX_RUTA_ARCHIVO];
-    FILE *pf;
-
-    printf("=========================================\n");
-    printf("   Procesador de Textos - Diccionario\n");
-    printf("=========================================\n\n");
-    printf("Por favor, ingrese la ruta del archivo de texto a procesar: ");
-
-    if(!fgets(rutaArchivo, sizeof(rutaArchivo), stdin))
+    int flag = 1;
+    do
     {
-        puts("Error: No se pudo leer la entrada para la ruta del archivo.\n");
-        return ERROR;
-    }
+        char rutaArchivo[MAX_RUTA_ARCHIVO];
+        FILE *pf;
+        system("cls");
 
-    ProcesarRuta(rutaArchivo); // Procesar la ruta para asegurarnos de que tenga el formato correcto
+        printf("=========================================\n");
+        printf("   Procesador de Textos - Diccionario\n");
+        printf("=========================================\n\n");
+        printf("Por favor, ingrese la ruta del archivo de texto a procesar: ");
 
-    pf = fopen(rutaArchivo, "r"); // Intentar abrir el archivo
-    if (!pf)
-    {
-        puts("Error al intentar abrir el archivo especificado\n");
-        printf("Asegurese de que el archivo '%s' exista y tenga permisos de lectura.\n", rutaArchivo);
-        return ERROR;
-    }
+        if(!fgets(rutaArchivo, sizeof(rutaArchivo), stdin))
+        {
+            puts("Error: No se pudo leer la entrada para la ruta del archivo.\n");
+            return ERROR;
+        }
 
-    printf("\nArchivo '%s' abierto exitosamente.\n\n", rutaArchivo);
+        ProcesarRuta(rutaArchivo); // Procesar la ruta para asegurarnos de que tenga el formato correcto
+
+        pf = fopen(rutaArchivo, "r"); // Intentar abrir el archivo
+        if (!pf)
+        {
+            puts("Error al intentar abrir el archivo especificado\n");
+            printf("Asegurese de que el archivo '%s' exista y tenga permisos de lectura.\n", rutaArchivo);
+            return ERROR;
+        }
+
+        printf("\nArchivo '%s' abierto exitosamente.\n\n", rutaArchivo);
 
 
-    // ============================================================================================================================================
-    //  empieza el procesamiento del archivo
-    // ============================================================================================================================================
+        // ============================================================================================================================================
+        //  empieza el procesamiento del archivo
+        // ============================================================================================================================================
 
-    long totalPalabras = 0;
-    long totalEspacios = 0;
-    long totalSignosPuntuacion = 0;
-    tDiccionario miDiccionario;
+        long totalPalabras = 0;
+        long totalEspacios = 0;
+        long totalSignosPuntuacion = 0;
+        tDiccionario miDiccionario;
 
-    if (crear_dic(&miDiccionario, 100, hash_simple) != DIC_OK) // Crear diccionario con el tdiccionario, 100 buckets y hash_simple como funcion de hash
-    {
-        puts("Error: No se pudo crear el diccionario.\n");
+        if (crear_dic(&miDiccionario, 100, hash_simple) != DIC_OK) // Crear diccionario con el tdiccionario, 100 buckets y hash_simple como funcion de hash
+        {
+            puts("Error: No se pudo crear el diccionario.\n");
+            fclose(pf);
+            return ERROR;
+        }
+
+        char linea[512];
+        while(fgets(linea,sizeof(linea),pf))       // Leer cada linea del archivo hasta el final y procesarla con el diccionario
+        {
+            ProcesarLineaParaDiccionarioYContadores(&miDiccionario, linea, &totalPalabras, &totalEspacios, &totalSignosPuntuacion);
+        }
+
+    //    recorrer_dic(&miDiccionario, accion_imprimir_dic, NULL);
+
         fclose(pf);
-        return ERROR;
-    }
+    //=========================================================================================================================================
+    //  Diccionario completo, ahora se procesa la lista de palabras
+    //=========================================================================================================================================
 
-    char linea[512];
-    while(fgets(linea,sizeof(linea),pf))       // Leer cada linea del archivo hasta el final y procesarla con el diccionario
-    {
-        ProcesarLineaParaDiccionarioYContadores(&miDiccionario, linea, &totalPalabras, &totalEspacios, &totalSignosPuntuacion);
-    }
+        tLista podio;
+        crear_lista(&podio);
 
-//    recorrer_dic(&miDiccionario, accion_imprimir_dic, NULL);
+        recorrer_dic(&miDiccionario, BajarPalabrasPodio, &podio); // en cada nodo realiza baja de palabras
 
-    fclose(pf);
-//=========================================================================================================================================
-//  Diccionario completo, ahora se procesa la lista de palabras
-//=========================================================================================================================================
+        //mostrar_lista_dic(&podio);
 
-    tLista podio;
-    crear_lista(&podio);
+        vaciar_dic(&miDiccionario);
 
-    recorrer_dic(&miDiccionario, BajarPalabrasPodio, &podio); // en cada nodo realiza baja de palabras
+        printf("\n=========================================\n");
+        printf("         Resultados del Analisis\n");
+        printf("=========================================\n");
+        printf("Archivo Procesado: %s\n\n", rutaArchivo);
 
-    mostrar_lista_dic(&podio);
+        printf("Estadisticas Generales:\n");
+        printf("  - Total de Palabras: %ld\n",totalPalabras);
+        printf("  - Total de Espacios: %ld\n",totalEspacios);
+        printf("  - Total de Signos de Puntuacion: %ld\n\n",totalSignosPuntuacion);
 
-    vaciar_dic(&miDiccionario);
+        mostrarPodioDic(&podio);
 
-    printf("\n=========================================\n");
-    printf("         Resultados del Analisis\n");
-    printf("=========================================\n");
-    printf("Archivo Procesado: %s\n\n", rutaArchivo);
+        printf("=========================================\n");
+        printf("   Analisis de Texto Finalizado\n");
+        printf("=========================================\n");
 
-    printf("Estadisticas Generales:\n");
-    printf("  - Total de Palabras: %ld\n",totalPalabras);
-    printf("  - Total de Espacios: %ld\n",totalEspacios);
-    printf("  - Total de Signos de Puntuacion: %ld\n\n",totalSignosPuntuacion);
+        vaciarLista(&podio);
 
-    mostrarPodioDic(&podio);
 
-    printf("=========================================\n");
-    printf("   Analisis de Texto Finalizado\n");
-    printf("=========================================\n");
-
-    vaciarLista(&podio);
-
+        printf("Desea ingresar otro archivo? (1: Si, 0: No): ");
+        scanf("%d", &flag);
+        fflush(stdin);
+        if (flag != 1 && flag != 0)
+        {
+            puts("Opcion invalida. Saliendo del programa.");
+            flag = 0; 
+        } 
+    } while (flag == 1);
     return OK;
 }
+ 

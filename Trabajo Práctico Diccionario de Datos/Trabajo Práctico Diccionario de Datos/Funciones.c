@@ -131,15 +131,16 @@ void *ObtenerMenorPuntaje(tLista* LPodio, int (*cmp)(const void*,const void*))
 
 int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int (*cmp)(const void*,const void*))
 {
-    // estamos analizando el nodo actual del recorrido.
-    void *puntajeCorteActual = ObtenerMenorPuntaje(LPodio, cmp);  // ultimo elemnto del podio
+/* Da bug
+            // estamos analizando el nodo actual del recorrido.
+            void *puntajeCorteActual = ObtenerMenorPuntaje(LPodio, cmp);  // ultimo elemnto del podio
 
-//=========================================================================================================================================
-// caso 1: nodo actual es menor que el ultimo del podio
-//=========================================================================================================================================
-    if (puntajeCorteActual && cmp(ElemNuevo, puntajeCorteActual) > 0)
-        return OK;
-
+        //=========================================================================================================================================
+        // caso 1: nodo actual es menor que el ultimo del podio
+        //=========================================================================================================================================
+            if (puntajeCorteActual && cmp(ElemNuevo, puntajeCorteActual) > 0)
+                return OK;
+*/
 //=========================================================================================================================================
 // caso 2: nodo actual es mayor o igual que el ultimo del podio
 //=========================================================================================================================================
@@ -177,7 +178,7 @@ int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int
     tNodo* ultimoDelPodio = NULL;
     tNodo* act = *LPodio;
 
-    while (act && cmp(act->info, nuevoPuntajeCorte) <= 0)
+    while (act && cmp(act->info, nuevoPuntajeCorte) >= 0)
     {
         ultimoDelPodio = act;
         act = act->sig;
