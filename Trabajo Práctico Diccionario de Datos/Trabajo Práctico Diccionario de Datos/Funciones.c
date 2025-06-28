@@ -162,8 +162,8 @@ int ActualizarPodio(tLista *LPodio, const void *ElemNuevo, size_t tamElemen, int
     }
     memcpy(nue->info, ElemNuevo, tamElemen);
     nue->tamInfo = tamElemen;
-    nue->sig = *aux;
-    *aux = nue;
+    nue->sig = *aux;  
+    *aux = nue;  
     // insertamos el nuevo nodo en la lista (en siguiente guaramos la direccion del nodo siguiente y cambiamos aux por la direccion del nodo actual)
 
 
