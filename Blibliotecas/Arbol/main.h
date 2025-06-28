@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../Bibliotecas/Arbol.h"
+#include "Arbol.h"
 
 int cmp_ent(const void *v1, const void *v2);
 int cmp_dni_ind(const void *v1, const void *v2);

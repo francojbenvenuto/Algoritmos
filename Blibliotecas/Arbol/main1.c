@@ -26,7 +26,7 @@ void probarArbol();
 void probarIndiceCrear();
 void probarIndiceFuncionamiento();
 
-int main()
+/*int main()
 {
     //probarFuncionesVarias();
     //probarArbol();
@@ -34,7 +34,7 @@ int main()
     probarIndiceFuncionamiento();
 
     return 0;
-}
+}*/
 
 void probarIndiceCrear()
 {

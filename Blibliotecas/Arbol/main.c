@@ -3,6 +3,10 @@
 
 int main()
 {
-    printf("Hello world!\n");
+    probarFuncionesVarias();
+    probarArbol();
+    probarIndiceCrear();
+    probarIndiceFuncionamiento();
+
     return 0;
 }

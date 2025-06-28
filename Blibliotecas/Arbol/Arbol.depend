@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1751136041 source:c:\programacion\algoritmos\algoritmos\blibliotecas\arbol\arbol.c
+	"Arbol.h"
+
+1751136103 c:\programacion\algoritmos\algoritmos\blibliotecas\arbol\arbol.h
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+
+1751136543 source:c:\programacion\algoritmos\algoritmos\blibliotecas\arbol\main.c
+	"Arbol.h"
+	"main.h"
+
+1751139730 c:\programacion\algoritmos\algoritmos\blibliotecas\arbol\main.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Arbol.h"
+
+1751139758 source:c:\programacion\algoritmos\algoritmos\blibliotecas\arbol\main1.c
+	"main.h"
+
