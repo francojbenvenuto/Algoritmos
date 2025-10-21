@@ -1,0 +1,31 @@
+# depslib dependency file v1.0
+1751331445 source:c:\users\laboratorios.unlmlab\desktop\benvenuto\parcialc\main.c
+	<stdio.h>
+	<stdlib.h>
+	<utilitarias.h>
+	<varias.h>
+	<arbol.h>
+
+1751306608 c:\users\laboratorios.unlmlab\desktop\benvenuto\include\utilitarias.h
+	<stdio.h>
+	<arbol.h>
+	<tipos.h>
+
+1751306608 c:\users\laboratorios.unlmlab\desktop\benvenuto\include\arbol.h
+	<string.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+
+1751306608 c:\users\laboratorios.unlmlab\desktop\benvenuto\include\tipos.h
+
+1751306607 c:\users\laboratorios.unlmlab\desktop\benvenuto\include\varias.h
+
+1751332089 source:c:\users\laboratorios.unlmlab\desktop\benvenuto\parcialc\utilitarias.c
+	<utilitarias.h>
+	<varias.h>
+
+1751332040 source:c:\users\laboratorios.unlmlab\desktop\benvenuto\parcialc\arbol.c
+	<tipos.h>
+	<arbol.h>
+

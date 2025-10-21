@@ -36,23 +36,14 @@ int poner_dic(tDiccionario* dic, const void* clave, size_t tamClave, const void*
         if(elem->tamClave == tamClave && memcmp(elem->clave, clave, tamClave) == 0)
         {
             // Clave encontrada, actualizar valor
-            if (!elem->valor && tamValor > 0)     // Si antes no habia valor o era NULL
-            {
-                elem->valor = malloc(tamValor);
-                if(!elem->valor)
-                    return DIC_ERROR_MEMORIA;
-            }
-            else if (elem->valor && tamValor == 0)     // Si el nuevo valor es "nada"
-            {
-                free(elem->valor); 
-                elem->valor = NULL;
-            }
+
+            free(elem->valor);    
+            elem->valor = malloc(tamValor);
+            memcpy(elem->valor, valor, tamValor);
+            
             // Si elem->valor ya tiene el tamano correcto, podemos reusar el buffer
             // o si es NULL y tamValor es 0, no hacer nada.
-            if (tamValor > 0 && elem->valor)   // Solo copiar si hay algo que copiar y donde copiar
-            {
-                memcpy(elem->valor, valor, tamValor);
-            }
+
             elem->tamValor = tamValor;
             return DIC_OK;
         }
@@ -102,7 +93,7 @@ int obtener_dic(const tDiccionario* dic, const void* clave, size_t tamClave, voi
 
     size_t indice = dic->func_hash(clave, tamClave) % dic->capacidad;
     tLista listaBucket = dic->tabla[indice];
-    tNodo* actual = listaBucket;
+    tNodo* actual = listaBucket; 
     /* calculo el indice de la posicion de la clave en la tabla, y con una tabla de búsqueda se busca la clave
        si la clave no existe, se devuelve DIC_CLAVE_NO_ENCONTRADA,
        igualamos un nodo actual a la cabeza de la lista del bucket, para recorrer cada nodo de la lista*/

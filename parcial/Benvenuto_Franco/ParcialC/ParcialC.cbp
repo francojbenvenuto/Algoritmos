@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Arbol" />
+		<Option title="ParcialC" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Arbol" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/ParcialC" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/Arbol" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/ParcialC" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -30,16 +30,22 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="../include" />
 		</Compiler>
-		<Unit filename="Arbol.c">
+		<Linker>
+			<Add library="../lib/libBibliotecaParcial.a" />
+		</Linker>
+		<Unit filename="../include/arbol.h" />
+		<Unit filename="../include/tipos.h" />
+		<Unit filename="../include/utilitarias.h" />
+		<Unit filename="../include/varias.h" />
+		<Unit filename="arbol.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Arbol.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="main.h" />
-		<Unit filename="main1.c">
+		<Unit filename="utilitarias.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
